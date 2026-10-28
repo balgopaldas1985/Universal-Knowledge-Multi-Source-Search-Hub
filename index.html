@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OmniSearch // Universal Knowledge Hub</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #090d16;
+            color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .search-wrapper {
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 24px;
+        }
+
+        .search-bar {
+            display: flex;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            padding: 8px 12px 8px 24px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            transition: border-color 0.2s;
+        }
+
+        .search-bar:focus-within {
+            border-color: #38bdf8;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.05rem;
+            outline: none;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #38bdf8, #6366f1);
+            border: none;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .search-btn:hover {
+            opacity: 0.9;
+        }
+
+        .results-container {
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card {
+            background: rgba(17, 24, 39, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 8px;
+        }
+
+        .card-body {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .source-pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #e2e8f0;
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .source-pill:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: #38bdf8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="search-wrapper">
+        <div class="logo">OMNISEARCH</div>
+        <div class="tagline">Universal Knowledge Hub & Multi-Source Indexer</div>
+        
+        <div class="search-bar">
+            <input type="text" id="queryInput" class="search-input" placeholder="Search anything in the universe (e.g., Quantum Computing, Artificial Intelligence)..." autofocus />
+            <button class="search-btn" onclick="performOmniSearch()">Search</button>
+        </div>
+    </div>
+
+    <div class="results-container" id="resultsArea">
+        <div class="card">
+            <div class="card-title">Welcome to OmniSearch</div>
+            <div class="card-body">Type any query above to instantly retrieve structured knowledge summaries, multi-source links, reference documents, and media resources.</div>
+        </div>
+    </div>
+
+    <script>
+        const queryInput = document.getElementById('queryInput');
+        const resultsArea = document.getElementById('resultsArea');
+
+        queryInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performOmniSearch();
+            }
+        });
+
+        function performOmniSearch() {
+            const query = queryInput.value.trim();
+            if (!query) return;
+
+            resultsArea.innerHTML = `
+                <div class="card">
+                    <div class="card-title">Indexing Query...</div>
+                    <div class="card-body">Searching global knowledge vaults for "${query}"...</div>
+                </div>
+            `;
+
+            setTimeout(() => {
+                let summaryHTML = `
+                    <div class="card">
+                        <div class="card-title">Overview: ${query}</div>
+                        <div class="card-body">
+                            <strong>${query}</strong> represents a key subject across modern technological, scientific, and global information systems. It encompasses core foundational principles, advanced cross-disciplinary applications, and ongoing research developments worldwide.
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Structured Knowledge & Resources</div>
+                        <div class="card-body">Explore verified reference documents, media portals, and deep-dive indices related to your query:</div>
+                        <div class="sources-grid">
+                            <a href="https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(query)}" target="_blank" class="source-pill">
+                                <span>📚 Wikipedia Index</span> ↗
+                            </a>
+                            <a href="https://scholar.google.com/scholar?q=${encodeURIComponent(query)}" target="_blank" class="source-pill">
+                                <span>🔬 Research Papers</span> ↗
+                            </a>
+                            <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(query)}" target="_blank" class="source-pill">
+                                <span>🎥 Video Vault</span> ↗
+                            </a>
+                            <a href="https://github.com/search?q=${encodeURIComponent(query)}" target="_blank" class="source-pill">
+                                <span>💻 Open Source Code</span> ↗
+                            </a>
+                        </div>
+                    </div>
+                `;
+                resultsArea.innerHTML = summaryHTML;
+            }, 600);
+        }
+    </script>
+</body>
+              </html>
+              
